@@ -1,30 +1,31 @@
+import { RootState } from 'types'
 import { TransactionState, TransactionStatus } from 'modules/transaction/types'
 
-// TODO: Type state here
-export const getState: (state: any) => TransactionState = state =>
+export const getState: (state: RootState) => TransactionState = state =>
   state.transaction
-export const getData: (state: any) => TransactionState['data'] = state =>
+export const getData: (state: RootState) => TransactionState['data'] = state =>
   getState(state).data
-export const getLoading: (state: any) => TransactionState['loading'] = state =>
-  getState(state).loading
+export const getLoading: (
+  state: RootState
+) => TransactionState['loading'] = state => getState(state).loading
 
 export const getTransactionsByStatus = (
-  state: any,
+  state: RootState,
   address: string,
   status: TransactionStatus
 ) =>
   getData(state).filter(item => item.from === address && item.status === status)
 
-export const getPendingTransactions = (state: any, address: string) =>
+export const getPendingTransactions = (state: RootState, address: string) =>
   getTransactionsByStatus(state, address, TransactionStatus.Pending)
 
-export const getTransactionHistory = (state: any, address: string) =>
+export const getTransactionHistory = (state: RootState, address: string) =>
   getData(state).filter(
     item => item.from === address && item.status !== TransactionStatus.Pending
   )
 
 export const getTransactionsByType = (
-  state: any,
+  state: RootState,
   address: string,
   type: string
 ) =>

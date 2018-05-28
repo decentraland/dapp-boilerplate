@@ -1,8 +1,8 @@
 import { env } from 'decentraland-commons'
-import createHistory from 'history/createBrowserHistory'
 import { routerMiddleware } from 'react-router-redux'
-import { applyMiddleware, compose, createStore, Action } from 'redux'
+import { applyMiddleware, compose, createStore } from 'redux'
 import { createLogger } from 'redux-logger'
+import createHistory from 'history/createBrowserHistory'
 import createSagasMiddleware from 'redux-saga'
 
 import { createTransactionMiddleware } from './modules/transaction/middleware'
@@ -33,18 +33,6 @@ const enhancer = composeEnhancers(middleware)
 const store = createStore(rootReducer, enhancer)
 
 sagasMiddleware.run(rootSaga)
-
-export function dispatch(action: Action | string) {
-  if (typeof action === 'string') {
-    store.dispatch({ type: action })
-  } else {
-    store.dispatch(action)
-  }
-}
-
-export function getState() {
-  return store.getState()
-}
 
 if (env.isDevelopment()) {
   const _window = window as any

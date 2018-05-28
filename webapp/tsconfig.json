@@ -22,8 +22,10 @@
       "lib/*": ["./src/lib/*"],
       "modules/*": ["./src/modules/*"],
       "themes/*": ["./src/themes/*"],
-      "locations": ["./src/locations.js"],
-      "store": ["./src/store.js"]
+      "reducer": ["./src/reducer"],
+      "types": ["./src/types"],
+      "store": ["./src/store"],
+      "locations": ["./src/locations"]
     }
   },
   "exclude": [

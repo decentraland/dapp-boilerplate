@@ -1,4 +1,4 @@
-import { AnyAction, Store } from 'redux'
+import { RootMiddleware } from 'types'
 import { fetchTransactionRequest } from 'modules/transaction/actions'
 import {
   isTransactionAction,
@@ -6,11 +6,8 @@ import {
 } from 'modules/transaction/utils'
 import { getAddress } from 'modules/wallet/selectors'
 
-// TODO: Store and Middleware typing here
-export function createTransactionMiddleware(): any {
-  return (store: Store<any>) => (next: (action: AnyAction) => void) => (
-    action: AnyAction
-  ) => {
+export const createTransactionMiddleware = (): any => {
+  const middleware: RootMiddleware = store => next => action => {
     if (isTransactionAction(action)) {
       const address = getAddress(store.getState())
       const hash = getTransactionHashFromAction(action)
@@ -22,4 +19,6 @@ export function createTransactionMiddleware(): any {
 
     return next(action)
   }
+
+  return middleware
 }

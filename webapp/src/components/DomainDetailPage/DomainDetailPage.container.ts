@@ -1,6 +1,7 @@
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import { DomainState, DomainActions } from 'modules/domain/types'
+import { RootState } from 'types'
+import { DomainActions } from 'modules/domain/types'
 import { fetchDomainRequest } from 'modules/domain/actions'
 import { getData, isLoading } from 'modules/domain/selectors'
 import { DomainDetailPageProps } from 'components/DomainDetailPage/types'
@@ -8,7 +9,7 @@ import { DomainDetailPageProps } from 'components/DomainDetailPage/types'
 import DomainDetailPage from './DomainDetailPage'
 
 const mapState = (
-  state: DomainState,
+  state: RootState,
   ownProps: DomainDetailPageProps
 ): DomainDetailPageProps => {
   const domains = getData(state)

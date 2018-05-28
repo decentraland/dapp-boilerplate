@@ -10,6 +10,7 @@ import {
 } from 'modules/domain/types'
 import { toDomainObject } from 'modules/domain/utils'
 import { loadingReducer } from 'modules/loading/reducer'
+import { Reducer } from 'redux'
 
 const INITIAL_STATE: DomainState = {
   data: {},
@@ -17,7 +18,10 @@ const INITIAL_STATE: DomainState = {
   error: null
 }
 
-export function domainReducer(state = INITIAL_STATE, action: DomainActions) {
+export const domainReducer: Reducer<DomainState> = (
+  state = INITIAL_STATE,
+  action: DomainActions
+): DomainState => {
   switch (action.type) {
     case FETCH_DOMAINS_REQUEST:
     case FETCH_DOMAIN_REQUEST:
