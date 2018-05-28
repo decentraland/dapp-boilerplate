@@ -3,9 +3,12 @@ import {
   FETCH_DOMAIN_REQUEST,
   FETCH_DOMAIN_SUCCESS,
   DomainActions,
-  DomainState
+  DomainState,
+  FETCH_DOMAINS_REQUEST,
+  FETCH_DOMAINS_FAILURE,
+  FETCH_DOMAINS_SUCCESS
 } from 'modules/domain/types'
-// import { toDomainObject } from 'modules/domain/utils'
+import { toDomainObject } from 'modules/domain/utils'
 import { loadingReducer } from 'modules/loading/reducer'
 
 const INITIAL_STATE: DomainState = {
@@ -16,6 +19,7 @@ const INITIAL_STATE: DomainState = {
 
 export function domainReducer(state = INITIAL_STATE, action: DomainActions) {
   switch (action.type) {
+    case FETCH_DOMAINS_REQUEST:
     case FETCH_DOMAIN_REQUEST:
       return {
         ...state,
@@ -33,6 +37,18 @@ export function domainReducer(state = INITIAL_STATE, action: DomainActions) {
         }
       }
     }
+    case FETCH_DOMAINS_SUCCESS: {
+      const domains = action.payload.domains
+      return {
+        loading: loadingReducer(state.loading, action),
+        error: null,
+        data: {
+          ...state.data,
+          ...toDomainObject(domains)
+        }
+      }
+    }
+    case FETCH_DOMAINS_FAILURE:
     case FETCH_DOMAIN_FAILURE:
       return {
         ...state,

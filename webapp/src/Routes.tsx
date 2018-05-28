@@ -7,12 +7,18 @@ import Wallet from 'components/Wallet'
 import Page from 'components/Page'
 import HomePage from 'components/HomePage'
 import DomainDetailPage from 'components/DomainDetailPage'
+import DomainsPage from 'components/DomainsPage'
 
 export default class Routes extends React.Component {
   renderRoutes() {
     return (
       <Switch>
         <Route exact={true} path={locations.root()} component={HomePage} />
+        <Route
+          exact={true}
+          path={locations.domains()}
+          component={DomainsPage}
+        />
         <Route
           exact={true}
           path={locations.domain()}

@@ -20,6 +20,7 @@ export default class DomainDetailPage extends React.PureComponent<
     return (
       <div className="DomainDetailPage">
         <h1>{t('domain_detail_page.title')}</h1>
+
         {isLoading || !domain ? (
           'Loading'
         ) : (

@@ -7,6 +7,9 @@
     "domains": "Dominios",
     "domain": "Dominio"
   },
+  "domains_page": {
+    "title": "Dominios"
+  },
   "domain_detail_page": {
     "title": "Detalle del Dominio"
   }

@@ -14,6 +14,10 @@ interface Response {
 }
 
 export class API {
+  fetchDomains() {
+    return this.request('get', '/domains', {})
+  }
+
   fetchDomain(id: string) {
     return this.request('get', `/domains/${id}`, {})
   }

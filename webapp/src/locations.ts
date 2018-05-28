@@ -8,5 +8,5 @@ export const locations: Locations = {
   domains: () => '/domains',
 
   domain: () => '/domains/:id',
-  domainDetail: param => `/domains/${param}`
+  domainDetail: id => `/domains/${id}`
 }
