@@ -1,0 +1,11 @@
+:root {
+  --primary: #ff4130;
+  --secondary: #00dbef;
+
+  --text: #ffffff;
+  --background: #1f2333;
+  --error: #ffb208;
+
+  --font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
+}

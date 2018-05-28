@@ -6,8 +6,9 @@ import { IntlProvider, addLocaleData, InjectedIntl } from 'react-intl'
 import * as enIntlData from 'react-intl/locale-data/en'
 import * as esIntlData from 'react-intl/locale-data/es'
 
-import * as enFnsData from 'date-fns/locale/en'
-import * as esFnsData from 'date-fns/locale/es'
+// We use require here to make ts-loader happy
+const enFnsData = require('date-fns/locale/en')
+const esFnsData = require('date-fns/locale/es')
 
 const DEFAULT_LOCALE = 'en'
 
@@ -57,6 +58,6 @@ export function getCurrentLocale() {
   return currentLocale
 }
 
-export function t(id: string, values: any) {
+export function t(id: string, values?: any) {
   return i18n.formatMessage({ id }, values)
 }

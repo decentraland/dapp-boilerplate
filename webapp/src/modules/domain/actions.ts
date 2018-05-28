@@ -1,16 +1,16 @@
 import { action } from 'typesafe-actions'
 import {
-  FETCH_DOMAINS_FAILURE,
-  FETCH_DOMAINS_REQUEST,
-  FETCH_DOMAINS_SUCCESS,
+  FETCH_DOMAIN_FAILURE,
+  FETCH_DOMAIN_REQUEST,
+  FETCH_DOMAIN_SUCCESS,
   Domain
 } from 'modules/domain/types'
 
-export const fetchDomainsRequest = (param: string) =>
-  action(FETCH_DOMAINS_REQUEST, { param })
+export const fetchDomainRequest = (id: string) =>
+  action(FETCH_DOMAIN_REQUEST, { id })
 
-export const fetchDomainsSuccess = (domains: Domain[]) =>
-  action(FETCH_DOMAINS_SUCCESS, { domains })
+export const fetchDomainSuccess = (domain: Domain) =>
+  action(FETCH_DOMAIN_SUCCESS, { domain })
 
-export const fetchDomainsFailure = (error: string) =>
-  action(FETCH_DOMAINS_FAILURE, { error })
+export const fetchDomainFailure = (error: string) =>
+  action(FETCH_DOMAIN_FAILURE, { error })

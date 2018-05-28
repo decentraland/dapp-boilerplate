@@ -1,9 +1,9 @@
 import { DomainState } from 'modules/domain/types'
 
 // TODO: Type state here
-export const getState: (state: any) => DomainState = state => state.domains
+export const getState: (state: any) => DomainState = state => state.domain
 
-export const getDomains: (state: any) => DomainState['data'] = state =>
+export const getData: (state: any) => DomainState['data'] = state =>
   getState(state).data
 
 export const isLoading: (state: any) => boolean = state =>

@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import { injectIntl, InjectedIntl } from 'react-intl'
 import { setI18n } from 'modules/translation/utils'
 import { TranslationActions } from 'modules/translation/types'
+import { TranslationSetupProps } from 'components/TranslationProvider/TranslationSetup/types'
 
 import TranslationSetup from './TranslationSetup'
-import { TranslationSetupProps } from './types'
 
 const mapState = (_: any, ownProps: TranslationSetupProps) => ownProps
 

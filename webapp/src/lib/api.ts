@@ -14,12 +14,12 @@ interface Response {
 }
 
 export class API {
-  fetchDomains(param: string) {
-    return this.request('get', '/domains', { param })
+  fetchDomain(id: string) {
+    return this.request('get', `/domains/${id}`, {})
   }
 
   fetchTranslations(locale: string) {
-    return this.request('get', '/translations', { locale })
+    return this.request('get', `/translations/${locale}`, {})
   }
 
   request(method: string, path: string, params?: APIParam) {

@@ -7,15 +7,25 @@ import { Router } from '../lib'
 export class DomainRouter extends Router {
   mount() {
     /**
+     * Returns all domains
+     * @return {array<Domain>}
+     */
+    this.app.get('/api/domains', server.handleRequest(this.getDomains))
+
+    /**
      * Returns the domains for a given param
      * @param  {string} param
      * @return {array<Domain>}
      */
-    this.app.get('/api/domains/:param', server.handleRequest(this.getDomains))
+    this.app.get('/api/domains/:id', server.handleRequest(this.getDomain))
   }
 
-  async getDomains(req: express.Request): Promise<DomainAttributes> {
-    let param = server.extractFromReq(req, 'param')
-    return Domain.findByParam(param)
+  async getDomains(): Promise<DomainAttributes[]> {
+    return Domain.find()
+  }
+
+  async getDomain(req: express.Request): Promise<DomainAttributes> {
+    let id = server.extractFromReq(req, 'id')
+    return Domain.findOne(id)
   }
 }

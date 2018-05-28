@@ -6,7 +6,7 @@ export interface DomainAttributes {
 }
 
 export class Domain extends Model {
-  static tableName = 'districts'
+  static tableName = 'domains'
   static columnNames = ['id', 'param']
 
   static findByParam(param): Promise<DomainAttributes> {

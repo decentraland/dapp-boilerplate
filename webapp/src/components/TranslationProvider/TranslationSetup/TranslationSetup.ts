@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { TranslationSetupProps } from './types'
+import { TranslationSetupProps } from 'components/TranslationProvider/TranslationSetup/types'
 
 export default class TranslationProvider extends React.PureComponent<
   TranslationSetupProps

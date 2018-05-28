@@ -5,9 +5,9 @@ import { getData } from 'modules/translation/selectors'
 import { fetchTranslationsRequest } from 'modules/translation/actions'
 import { getPreferredLocale } from 'modules/translation/utils'
 import { TranslationState, TranslationActions } from 'modules/translation/types'
+import { TranslationProviderProps } from 'components/TranslationProvider/types'
 
 import TranslationProvider from './TranslationProvider'
-import { TranslationProviderProps } from 'components/TranslationProvider/types'
 
 const mapState = (
   state: TranslationState,

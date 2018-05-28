@@ -4,6 +4,10 @@
     "es": "Español"
   },
   "global": {
+    "domains": "Dominios",
     "domain": "Dominio"
+  },
+  "domain_detail_page": {
+    "title": "Detalle del Dominio"
   }
 }

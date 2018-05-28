@@ -5,6 +5,8 @@ export interface Locations {
 export const locations: Locations = {
   root: () => '/',
 
-  domain: () => '/domains/:param',
+  domains: () => '/domains',
+
+  domain: () => '/domains/:id',
   domainDetail: param => `/domains/${param}`
 }

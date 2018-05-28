@@ -1,7 +1,6 @@
 import { eth, contracts, wallets, Contract } from 'decentraland-eth'
 import { env, utils } from 'decentraland-commons'
 import { isMobile } from 'lib/utils'
-import { Wallet } from 'decentraland-eth/dist/ethereum/wallets/Wallet'
 
 interface ConnectOptions {
   address: string
@@ -27,33 +26,27 @@ export async function connectEthereumWallet(
       )
       throw error
     }
-    await utils.sleep(250)
+    await utils.sleep(150)
     return connectEthereumWallet(options, retries + 1)
   }
 }
 
 function getContracts(): Contract[] {
-  const { MANAToken, LANDRegistry, Marketplace } = contracts
-  return [
-    new MANAToken(env.get('REACT_APP_MANA_TOKEN_CONTRACT_ADDRESS')),
-    new LANDRegistry(env.get('REACT_APP_LAND_REGISTRY_CONTRACT_ADDRESS')),
-    new Marketplace(env.get('REACT_APP_MARKETPLACE_CONTRACT_ADDRESS'))
-  ]
+  const { LANDRegistry } = contracts
+
+  return [new LANDRegistry(env.get('REACT_APP_LAND_REGISTRY_CONTRACT_ADDRESS'))]
 }
 
-function getWallets(options: ConnectOptions, retries: number): Wallet[] {
+function getWallets(
+  options: ConnectOptions,
+  retries: number
+): wallets.NodeWallet[] | wallets.LedgerWallet[] {
   const { LedgerWallet, NodeWallet } = wallets
   const { address, derivationPath = '' } = options
 
-  let wallet: Wallet
-
-  if (isMobile() || retries < 3) {
-    wallet = new NodeWallet(address)
-  } else {
-    wallet = new LedgerWallet(address, derivationPath)
-  }
-
-  return [wallet]
+  return isMobile() || retries < 3
+    ? [new NodeWallet(address)]
+    : [new LedgerWallet(address, derivationPath)]
 }
 
 export function isLedgerWallet() {

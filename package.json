@@ -6,13 +6,18 @@
   "scripts": {
     "lint": "tslint -p src/tsconfig.json --fix",
     "lint:fix": "tslint -p src/tsconfig.json",
-    "pretest": "npm run build:tsc",
-    "test": "npx mocha -r specs/specs_setup.js specs/setup.js src/**{/**,/}/*.spec.js",
-    "watch:test": "npm run watch:build:tsc && npx mocha -r specs/specs_setup.js specs/setup.js src/**{/**,/}/*.spec.js --watch",
-    "premigrate": "npm run build:tsc",
+    "pretest":
+      "npm run build:test && npm run build:tsc && npm run build:scripts",
+    "test":
+      "npx mocha -r specs/specs_setup.js specs/setup.js src/**{/**,/}/*.spec.js",
+    "watch:test":
+      "npm run watch:build:tsc && npx mocha -r specs/specs_setup.js specs/setup.js src/**{/**,/}/*.spec.js --watch",
+    "premigrate": "npm run build:tsc && npm run build:scripts",
     "migrate": "./migrations/migrate",
     "build": "npm run lint && npm run test && npm run build:tsc",
     "build:ci": "npm run migrate up && npm run build",
+    "build:tests": "tsc -p /tsconfig.json",
+    "build:scripts": "tsc -p scripts/tsconfig.json",
     "build:tsc": "tsc -p src/tsconfig.json",
     "watch:build:tsc": "tsc -p src/tsconfig.json --watch",
     "start": "npm run build:tsc && cd src && node server.js"
@@ -21,11 +26,7 @@
     "type": "git",
     "url": "https://github.com/decentraland/decentraland-dapp-boilerplate.git"
   },
-  "keywords": [
-    "decentraland",
-    "boilerplate",
-    "dapp"
-  ],
+  "keywords": ["decentraland", "boilerplate", "dapp"],
   "author": "Decentraland",
   "license": "ISC",
   "dependencies": {
