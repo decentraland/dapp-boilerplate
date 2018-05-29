@@ -4,7 +4,7 @@
 
 * [x] Better State typing for selectors
 * [x] Fix autoreload issues with webpack
-* [ ] Fix Hot reloading for nested .ts files
+* [x] Fix Hot reloading for nested .ts files
 * [ ] Cool README
 * [ ] Add analytics module
 * [ ] Add Blockchain monitor module

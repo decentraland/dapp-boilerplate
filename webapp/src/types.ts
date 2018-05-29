@@ -24,6 +24,6 @@ export type RootAction =
 
 export type RootStore = Store<RootState>
 
-export type RootMiddleware = (store: RootStore) => (next: Dispatch<AnyAction>) => (
-  action: AnyAction
-)
+export type RootMiddleware = (
+  store: RootStore
+) => (next: Dispatch<AnyAction>) => (action: AnyAction) => any
