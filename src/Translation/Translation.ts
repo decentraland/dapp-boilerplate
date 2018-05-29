@@ -6,12 +6,15 @@ import * as path from 'path'
 export interface TranslationData {
   [key: string]: string
 }
+export interface TranslationCache {
+  locale?: TranslationData
+}
 
 export class Translation {
   static DEFAULT_LOCALE = 'en'
 
   localesPath: string
-  cache: { locale?: TranslationData }
+  cache: TranslationCache
 
   constructor() {
     this.localesPath = env.get(
