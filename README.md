@@ -24,4 +24,8 @@
     * [ ] translations
   * scripts
     * [ ] translations
-* [ ] Simple CLI to clone and setup repo
+    * [x] create model => migration + Model folder
+* [ ] Simple CLI to:
+  * clone and setup repo
+  * add/remove features
+  * run create-model

@@ -10,7 +10,7 @@
     "test": "npx mocha -r specs/specs_setup.js specs/setup.js src/**{/**,/}/*.spec.js",
     "watch:test": "npm run watch:build:tsc && npx mocha -r specs/specs_setup.js specs/setup.js src/**{/**,/}/*.spec.js --watch",
     "premigrate": "npm run build:scripts",
-    "migrate": "./migrations/migrate",
+    "migrate": "./migrations/migrate.js",
     "build": "npm run lint && npm run test && npm run build:tsc",
     "build:ci": "npm run migrate up && npm run build",
     "build:tests": "tsc -p /tsconfig.json",
@@ -19,6 +19,7 @@
     "watch:build:tsc": "tsc -p src/tsconfig.json --watch",
     "pretranslate": "npm run build:scripts",
     "translate": "./scripts/translate.ts && prettier ./src/Translation/locales/*.json --write",
+    "create-model": "./scripts/create-model.ts",
     "start": "npm run build:tsc && cd src && node server.js"
   },
   "repository": {
@@ -50,11 +51,13 @@
     "@types/express": "^4.11.1",
     "@types/faker": "^4.1.2",
     "@types/mocha": "^5.2.0",
+    "@types/pluralize": "0.0.28",
     "@types/sinon": "^4.3.3",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "dcl-tslint-config-standard": "^1.0.1",
     "mocha": "^4.0.1",
+    "pluralize": "^7.0.0",
     "prettier": "^1.10.2",
     "ts-node": "^6.0.3",
     "tslint": "^5.10.0",
@@ -63,4 +66,3 @@
     "typescript": "^2.8.3"
   }
 }
-
