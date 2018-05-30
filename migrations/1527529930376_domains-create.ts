@@ -1,4 +1,4 @@
-const { Domain } = require('../src/Domain')
+import { Domain } from '../src/Domain'
 
 const tableName = Domain.tableName
 
@@ -6,8 +6,10 @@ exports.up = pgm => {
   pgm.createTable(
     tableName,
     {
-      id: { type: 'TEXT', primaryKey: true, notNull: true },
-      param: { type: 'TEXT' }
+      id: { type: 'INT', primaryKey: true, notNull: true },
+      param: { type: 'TEXT' },
+      created_at: { type: 'TIMESTAMP', notNull: true },
+      updated_at: { type: 'TIMESTAMP' }
     },
     { ifNotExists: true }
   )

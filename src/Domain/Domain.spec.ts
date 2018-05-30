@@ -10,19 +10,19 @@ describe('Domain', function() {
 
       await Promise.all([
         Domain.insert({
-          id: '1',
+          id: 1,
           param: paramName,
           created_at: now,
           updated_at: now
         }),
         Domain.insert({
-          id: '2',
+          id: 2,
           param: 'Disabled',
           created_at: now,
           updated_at: now
         }),
         Domain.insert({
-          id: '3',
+          id: 3,
           param: 'Param 2',
           created_at: now,
           updated_at: now
@@ -32,7 +32,7 @@ describe('Domain', function() {
       const domains = await Domain.findByParam(paramName)
 
       expect(domains).to.be.deep.equal({
-        id: '1',
+        id: 1,
         param: paramName,
         created_at: now,
         updated_at: now

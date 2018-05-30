@@ -1,13 +1,13 @@
 import { Model } from 'decentraland-server'
 
 export interface DomainAttributes {
-  id?: string
+  id: number
   param: string
 }
 
 export class Domain extends Model {
   static tableName = 'domains'
-  static columnNames = ['id', 'param']
+  static columnNames = ['id', 'param', 'created_at', 'updated_at']
 
   static findByParam(param): Promise<DomainAttributes> {
     return this.findOne({ param })

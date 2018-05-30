@@ -4,8 +4,8 @@
     "es": "Español"
   },
   "global": {
-    "domain": "Dominio",
-    "domains": "Dominios"
+    "domains": "Dominios",
+    "domain": "Dominio"
   },
   "domains_page": {
     "title": "Página de dominios"

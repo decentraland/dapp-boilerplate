@@ -3,7 +3,7 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import * as pluralize from 'pluralize'
-import * as migrate from '../migrations/migrate'
+import { migrate } from './migrate'
 
 function main() {
   const modelName = process.argv[2]
@@ -124,7 +124,7 @@ exports.down = pgm => {
 
     for (const file of files) {
       if (file.search(migrationFileName) !== -1) {
-        fs.writeFileSync(`${migrationsPath}/${file}`, migrationFile, 'utf8')
+        fs.writeFileSync(`${migrationsPath}/${file}.ts`, migrationFile, 'utf8')
       }
     }
   }

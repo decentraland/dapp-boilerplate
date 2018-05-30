@@ -1,4 +1,4 @@
 #!/usr/bin/env node
 
-// maybe ts-core/register here
+require('ts-node').register(require('../tsconfig.json'))
 require('../node_modules/node-pg-migrate/bin/node-pg-migrate')

@@ -1,20 +1,26 @@
-const { utils, Log, Model } = require('decentraland-commons')
+import { Model } from 'decentraland-server'
+import { utils, Log } from 'decentraland-commons'
 
-function omitProps(obj, omittedProps) {
+export function omitProps<T>(obj: T, omittedProps: string[]): T
+export function omitProps(obj: any, omittedProps: string[]): any {
   const newObj = utils.omit(obj, omittedProps)
 
   for (const prop in newObj) {
     const value = newObj[prop]
 
     if (value !== null && typeof value === 'object') {
-      newObj[prop] = omitProps(value, omittedProps)
+      if (Array.isArray(value)) {
+        newObj[prop] = value.map(v => omitProps(v, omittedProps))
+      } else {
+        newObj[prop] = omitProps(value, omittedProps)
+      }
     }
   }
 
   return newObj
 }
 
-function mockModelDbOperations(operations) {
+export function mockModelDbOperations(operations: { [key: string]: Function }) {
   const log = new Log('Query')
   const toJSON = obj => JSON.stringify(obj) // Formatting aid
 
@@ -64,9 +70,4 @@ function mockModelDbOperations(operations) {
   Model.db.delete = function(...args) {
     return operations.delete.call(this, ...args)
   }
-}
-
-module.exports = {
-  omitProps,
-  mockModelDbOperations
 }
