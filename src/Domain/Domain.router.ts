@@ -1,8 +1,9 @@
 import { server } from 'decentraland-server'
+import { utils } from 'decentraland-commons'
 import * as express from 'express'
 
 import { Domain, DomainAttributes } from './Domain.model'
-import { Router } from '../lib'
+import { Router, blacklist } from '../lib'
 
 export class DomainRouter extends Router {
   mount() {
@@ -21,7 +22,8 @@ export class DomainRouter extends Router {
   }
 
   async getDomains(): Promise<DomainAttributes[]> {
-    return Domain.find()
+    const domains = await Domain.find()
+    return utils.mapOmit(domains, blacklist.domain)
   }
 
   async getDomain(req: express.Request): Promise<DomainAttributes> {

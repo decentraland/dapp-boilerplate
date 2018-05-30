@@ -58,7 +58,11 @@ export class ModelStructure {
   writeModelFile() {
     const classFile = `import { Model } from 'decentraland-server'
 
-export interface ${this.modelName}Attributes {}
+export interface ${this.modelName}Attributes {
+  id: number
+  created_at?: Date
+  updated_at?: Date
+}
 
 export class ${this.modelName} extends Model {
   static tableName = '${this.tableName}'
@@ -90,7 +94,7 @@ describe('${this.modelName}', function() {
   ${this.modelName},
   ${this.modelName}Attributes // used to type return values
 } from './${this.modelName}.model' */
-import { Router } from '../lib'
+import { Router, /* blacklist */ } from '../lib'
 
 export class ${this.modelName}Router extends Router {
   mount() {

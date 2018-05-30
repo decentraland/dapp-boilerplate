@@ -3,6 +3,8 @@ import { Model } from 'decentraland-server'
 export interface DomainAttributes {
   id: number
   param: string
+  created_at?: Date
+  updated_at?: Date
 }
 
 export class Domain extends Model {
