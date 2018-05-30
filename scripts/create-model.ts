@@ -125,12 +125,9 @@ exports.up = (pgm: MigrationBuilder) => {
     },
     { ifNotExists: true, comment: null }
   )
-
-  pgm.createIndex(tableName, 'param')
 }
 
 exports.down = (pgm: MigrationBuilder) => {
-  pgm.dropIndex(tableName, 'param')
   pgm.dropTable(tableName, {})
 }`
 
