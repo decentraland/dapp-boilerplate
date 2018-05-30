@@ -1,11 +1,5 @@
 import { Model } from 'decentraland-server'
-
-export interface DomainAttributes {
-  id: number
-  param: string
-  created_at?: Date
-  updated_at?: Date
-}
+import { DomainAttributes } from './Domain.types'
 
 export class Domain extends Model {
   static tableName = 'domains'

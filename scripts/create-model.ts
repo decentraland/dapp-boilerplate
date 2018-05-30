@@ -50,26 +50,31 @@ export class ModelStructure {
 
   writeFiles() {
     this.writeModelFile()
+    this.writeTypesFile()
     this.writeRouterFile()
     this.writeSpecFile()
     this.writeIndexFile()
   }
 
   writeModelFile() {
-    const classFile = `import { Model } from 'decentraland-server'
-
-export interface ${this.modelName}Attributes {
-  id: number
-  created_at?: Date
-  updated_at?: Date
-}
+    const modelFile = `import { Model } from 'decentraland-server'
 
 export class ${this.modelName} extends Model {
   static tableName = '${this.tableName}'
   static columnNames = ['id', 'created_at', 'updated_at']
 }
 `
-    fs.writeFileSync(this.getPath('model'), classFile, 'utf8')
+    fs.writeFileSync(this.getPath('model'), modelFile, 'utf8')
+  }
+
+  writeTypesFile() {
+    const typesFile = `export interface ${this.modelName}Attributes {
+  id: number
+  created_at?: Date
+  updated_at?: Date
+}
+`
+    fs.writeFileSync(this.getPath('types'), typesFile, 'utf8')
   }
 
   writeSpecFile() {
@@ -87,14 +92,13 @@ describe('${this.modelName}', function() {
   }
 
   writeRouterFile() {
+    // prettier-ignore
     const routerFile = `/* import { server } from 'decentraland-server' // used to handle requests */
 /* import * as express from 'express' // used to type req variables */
 
-/* import {
-  ${this.modelName},
-  ${this.modelName}Attributes // used to type return values
-} from './${this.modelName}.model' */
-import { Router, /* blacklist */ } from '../lib'
+import { Router /* , blacklist */ } from '../lib'
+/* import { ${this.modelName} } from './${this.modelName}.model' */
+/* import { ${this.modelName}Attributes } from './${this.modelName}.types' // used to type return values */
 
 export class ${this.modelName}Router extends Router {
   mount() {

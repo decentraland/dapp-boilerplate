@@ -2,8 +2,9 @@ import { server } from 'decentraland-server'
 import { utils } from 'decentraland-commons'
 import * as express from 'express'
 
-import { Domain, DomainAttributes } from './Domain.model'
 import { Router, blacklist } from '../lib'
+import { Domain } from './Domain.model'
+import { DomainAttributes } from './Domain.types'
 
 export class DomainRouter extends Router {
   mount() {
