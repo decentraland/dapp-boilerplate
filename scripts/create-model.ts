@@ -13,7 +13,7 @@ function main() {
 
   const modelStructure = new ModelStructure(modelName)
 
-  modelStructure.migrate()
+  modelStructure.runMigrate()
   modelStructure.generateFolderStructure()
   modelStructure.writeFiles()
 }
@@ -29,11 +29,14 @@ export class ModelStructure {
     this.tableName = pluralize(modelName.toLowerCase())
   }
 
-  migrate() {
+  runMigrate() {
+    const migrationsPath = path.resolve(__dirname, `../migrations`)
     const migrationFileName = `${this.tableName}-create`
-    const child = migrate(['create', migrationFileName])
+    const child = migrate(['create', migrationFileName], migrationsPath)
 
-    child.on('close', () => this.writeMigrationFile(migrationFileName))
+    child.on('close', () =>
+      this.writeMigrationFile(migrationFileName, migrationsPath)
+    )
   }
 
   generateFolderStructure() {
@@ -49,6 +52,7 @@ export class ModelStructure {
     this.writeModelFile()
     this.writeRouterFile()
     this.writeSpecFile()
+    this.writeIndexFile()
   }
 
   writeModelFile() {
@@ -97,34 +101,48 @@ export class ${this.modelName}Router extends Router {
     fs.writeFileSync(this.getPath('router'), routerFile, 'utf8')
   }
 
-  writeMigrationFile(migrationFileName: string) {
-    const migrationFile = `const { ${this.modelName} } = require('../src/${
-      this.modelName
-    }')
+  writeIndexFile() {
+    const indexFile = `export * from './${this.modelName}.model'
+export * from './${this.modelName}.router'
+`
+
+    fs.writeFileSync(`${this.modelPath}/index.ts`, indexFile, 'utf8')
+  }
+
+  writeMigrationFile(migrationFileName: string, migrationsPath: string) {
+    const migrationFile = `import { MigrationBuilder } from 'node-pg-migrate'
+import { ${this.modelName} } from '../src/${this.modelName}'
 
 const tableName = ${this.modelName}.tableName
 
-exports.up = pgm => {
+exports.up = (pgm: MigrationBuilder) => {
   pgm.createTable(
     tableName,
     {
-      id: { type: 'INT', primaryKey: true, notNull: true },
-      created_at: { type: 'TIMESTAMP', notNull: true },
-      updated_at: { type: 'TIMESTAMP' }
+      id: { type: 'INT', primaryKey: true, notNull: true, comment: null },
+      created_at: { type: 'TIMESTAMP', notNull: true, comment: null },
+      updated_at: { type: 'TIMESTAMP', comment: null }
     },
-    { ifNotExists: true }
+    { ifNotExists: true, comment: null }
   )
+
+  pgm.createIndex(tableName, 'param')
 }
 
-exports.down = pgm => {
-  pgm.dropTable(tableName)
+exports.down = (pgm: MigrationBuilder) => {
+  pgm.dropIndex(tableName, 'param')
+  pgm.dropTable(tableName, {})
 }`
-    const migrationsPath = path.resolve(__dirname, `../migrations`)
-    const files = fs.readdirSync(migrationsPath)
+
+    const files = fs
+      .readdirSync(migrationsPath)
+      .sort()
+      .reverse()
 
     for (const file of files) {
       if (file.search(migrationFileName) !== -1) {
-        fs.writeFileSync(`${migrationsPath}/${file}.ts`, migrationFile, 'utf8')
+        fs.writeFileSync(`${migrationsPath}/${file}`, migrationFile, 'utf8')
+        return
       }
     }
   }
