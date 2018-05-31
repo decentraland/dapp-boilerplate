@@ -59,9 +59,8 @@ export class ModelStructure {
   writeModelFile() {
     const modelFile = `import { Model } from 'decentraland-server'
 
-export class ${this.modelName} extends Model {
+export class ${this.modelName} extends Model<${this.modelName}Attributes> {
   static tableName = '${this.tableName}'
-  static columnNames = ['id', 'created_at', 'updated_at']
 }
 `
     fs.writeFileSync(this.getPath('model'), modelFile, 'utf8')
@@ -112,6 +111,7 @@ export class ${this.modelName}Router extends Router {
   writeIndexFile() {
     const indexFile = `export * from './${this.modelName}.model'
 export * from './${this.modelName}.router'
+export * from './${this.modelName}.types'
 `
 
     fs.writeFileSync(`${this.modelPath}/index.ts`, indexFile, 'utf8')
