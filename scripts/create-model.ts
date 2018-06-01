@@ -123,7 +123,7 @@ import { ${this.modelName} } from '../src/${this.modelName}'
 
 const tableName = ${this.modelName}.tableName
 
-exports.up = (pgm: MigrationBuilder) => {
+export const up = (pgm: MigrationBuilder) => {
   pgm.createTable(
     tableName,
     {
@@ -135,7 +135,7 @@ exports.up = (pgm: MigrationBuilder) => {
   )
 }
 
-exports.down = (pgm: MigrationBuilder) => {
+export const down = (pgm: MigrationBuilder) => {
   pgm.dropTable(tableName, {})
 }`
 
