@@ -58,6 +58,7 @@ export class ModelStructure {
 
   writeModelFile() {
     const modelFile = `import { Model } from 'decentraland-server'
+import { ${this.modelName}Attributes } from './${this.modelName}.types'
 
 export class ${this.modelName} extends Model<${this.modelName}Attributes> {
   static tableName = '${this.tableName}'

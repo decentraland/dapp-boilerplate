@@ -2,8 +2,8 @@
 
 import * as fs from 'fs'
 import * as path from 'path'
+import * as flat from 'flat'
 import axios from 'axios'
-import { unflatten } from 'flat'
 import { env, Log, utils } from 'decentraland-commons'
 
 import { loadEnv } from './utils'
@@ -28,19 +28,18 @@ const nonTranslatable = ['Decentraland', 'LAND', 'MANA']
 
 const TRANSLATION_KEY = 'tk'
 const NON_TRANSLATABLE_KEY = 'nt'
+const DEFAULT_LOCALE = Translation.DEFAULT_LOCALE
 
 async function main() {
-  const DEFAULT_LOCALE = Translation.DEFAULT_LOCALE
   const translation = new Translation()
 
   const mainTranslations = await translation.fetch(DEFAULT_LOCALE)
-  const availableLocales = await translation.getAvailableLocales()
+  const availableLocales = await getAvailableLocales()
 
   const mainKeys = Object.keys(mainTranslations)
-  let missingTranslations = {}
-  for (const locale of availableLocales) {
-    if (locale === DEFAULT_LOCALE) continue
+  let flatMissingTranslations = {}
 
+  for (const locale of availableLocales) {
     const translations = await translation.fetch(locale)
     let requests: Promise<RemoteTranslation>[] = []
 
@@ -64,28 +63,21 @@ async function main() {
       )
 
       if (requests.length > BATCH_SIZE) {
-        await processBatch(requests, missingTranslations)
+        await updateMissingTranslations(flatMissingTranslations, requests)
         requests = []
       }
     }
 
-    await processBatch(requests, missingTranslations)
+    await updateMissingTranslations(flatMissingTranslations, requests)
   }
 
-  missingTranslations = unflatten(missingTranslations)
-  log.info(
-    'Added the following translations:\n\n',
-    JSON.stringify(missingTranslations, null, 2),
-    '\n'
-  )
-
-  await writeTranslations(availableLocales, missingTranslations)
+  await writeTranslations(flatMissingTranslations)
   log.info('Done!')
 }
 
-async function processBatch(
-  requests: Promise<RemoteTranslation>[],
-  missingTranslations: TranslationCache
+async function updateMissingTranslations(
+  flatMissingTranslations: TranslationCache,
+  requests: Promise<RemoteTranslation>[]
 ) {
   const translated = await Promise.all(requests)
 
@@ -96,10 +88,10 @@ async function processBatch(
       text = capitalize(text)
     }
 
-    if (!missingTranslations[locale]) {
-      missingTranslations[locale] = {}
+    if (!flatMissingTranslations[locale]) {
+      flatMissingTranslations[locale] = {}
     }
-    missingTranslations[locale][key] = text
+    flatMissingTranslations[locale][key] = text
     log.info(`${locale}(${key}): ${defaultText} -> ${text}`)
   }
 }
@@ -145,24 +137,54 @@ function restoreTextKeys(text: string, replacedKeys: TranslationData): string {
 }
 
 async function writeTranslations(
-  availableLocales: string[],
-  missingTranslations: TranslationCache,
+  flatMissingTranslations: TranslationCache,
   basePath: string = '../src/Translation/locales'
 ) {
+  const mainTranslations = await new Translation().fetch(DEFAULT_LOCALE)
+  const availableLocales = await getAvailableLocales()
+
+  const flatMainTranslations = flat.flatten<TranslationData, TranslationData>(
+    mainTranslations
+  )
+
   for (const locale of availableLocales) {
     const localePath = path.resolve(__dirname, `${basePath}/${locale}.json`)
-    const currentTranslations = require(localePath)
-    const updatedTranslations = Object.assign(
-      {},
-      currentTranslations,
-      missingTranslations[locale]
+    const flatCurrentTranslations = flatAndRemoveObsoleteKeys(
+      require(localePath),
+      flatMainTranslations
     )
+
+    let updatedTranslations = Object.assign(
+      {},
+      flatCurrentTranslations,
+      flatMissingTranslations[locale]
+    )
+    updatedTranslations = flat.unflatten(updatedTranslations)
+
     await utils.promisify(fs.writeFile)(
       localePath,
       JSON.stringify(updatedTranslations, null, 2),
       'utf8'
     )
   }
+}
+
+function flatAndRemoveObsoleteKeys(
+  translations: TranslationData,
+  flatBaseTranslations: TranslationData
+): TranslationData {
+  const currentTranslations = flat.flatten(translations)
+
+  const cleanedTranslations = Object.keys(currentTranslations)
+    .filter(key => key in flatBaseTranslations)
+    .reduce((clean, key) => ({ ...clean, [key]: currentTranslations[key] }), {})
+
+  return cleanedTranslations
+}
+
+async function getAvailableLocales() {
+  const availableLocales = await new Translation().getAvailableLocales()
+  return availableLocales.filter(locale => locale !== DEFAULT_LOCALE)
 }
 
 function isCapitalized(text = '') {
@@ -188,8 +210,8 @@ async function translate(lang: string, text: string): Promise<string> {
       text
     )}`
   )
-  const tranlsation: string = result.data[0][0][0]
-  return tranlsation
+  const translation: string = result.data[0][0][0]
+  return translation
 }
 
 if (require.main === module) {
