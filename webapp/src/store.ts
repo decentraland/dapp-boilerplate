@@ -6,7 +6,7 @@ import createHistory from 'history/createBrowserHistory'
 import createSagasMiddleware from 'redux-saga'
 import { createStorageMiddleware } from '@dapps/modules/storage/middleware'
 
-import { createTransactionMiddleware } from './modules/transaction/middleware'
+import { createTransactionMiddleware } from '@dapps/modules/transaction/middleware'
 import { rootReducer } from './reducer'
 import { rootSaga } from './sagas'
 
