@@ -11,7 +11,7 @@
     "migrate": "./scripts/migrate.ts",
     "build": "npm run lint && npm run test && npm run build:tsc",
     "build:ci": "npm run migrate up && npm run build",
-    "build:tests": "tsc -p /tsconfig.json",
+    "build:tests": "tsc -p src/tsconfig.json",
     "build:scripts": "npm run build:tsc && tsc -p scripts/tsconfig.json",
     "build:tsc": "tsc -p src/tsconfig.json",
     "watch:build:tsc": "tsc -p src/tsconfig.json --watch",
