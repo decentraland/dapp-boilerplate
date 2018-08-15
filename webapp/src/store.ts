@@ -4,6 +4,7 @@ import { applyMiddleware, compose, createStore } from 'redux'
 import { createLogger } from 'redux-logger'
 import createHistory from 'history/createBrowserHistory'
 import createSagasMiddleware from 'redux-saga'
+import { createStorageMiddleware } from '@dapps/modules/storage/middleware'
 
 import { createTransactionMiddleware } from './modules/transaction/middleware'
 import { rootReducer } from './reducer'
@@ -16,6 +17,11 @@ const history = createHistory()
 
 const historyMiddleware = routerMiddleware(history)
 const sagasMiddleware = createSagasMiddleware()
+
+const { storageMiddleware, loadStorageMiddleware } = createStorageMiddleware(
+  'dapp-boilerplate-storage-key'
+)
+
 const loggerMiddleware = createLogger({
   collapsed: () => true,
   predicate: (_: any, action) =>
@@ -27,12 +33,14 @@ const middleware = applyMiddleware(
   historyMiddleware,
   sagasMiddleware,
   loggerMiddleware,
-  transactionMiddleware
+  transactionMiddleware,
+  storageMiddleware
 )
 const enhancer = composeEnhancers(middleware)
 const store = createStore(rootReducer, enhancer)
 
 sagasMiddleware.run(rootSaga)
+loadStorageMiddleware(store)
 
 if (env.isDevelopment()) {
   const _window = window as any

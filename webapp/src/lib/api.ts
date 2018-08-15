@@ -22,7 +22,7 @@ export class API {
     return this.request('get', `/domains/${id}`, {})
   }
 
-  fetchTranslations(locale: string) {
+  fetchTranslation(locale: string) {
     return this.request('get', `/translations/${locale}`, {})
   }
 

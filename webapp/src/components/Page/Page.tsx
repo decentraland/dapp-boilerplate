@@ -12,10 +12,6 @@ export default class Page extends React.PureComponent {
   render() {
     const { children } = this.props
 
-    return (
-      <TranslationProvider>
-        <div className="Page">{children}</div>
-      </TranslationProvider>
-    )
+    return <div className="Page">{children}</div>
   }
 }

@@ -3,7 +3,6 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 
 import { locations } from 'locations'
 
-import Wallet from 'components/Wallet'
 import Page from 'components/Page'
 import HomePage from 'components/HomePage'
 import DomainDetailPage from 'components/DomainDetailPage'
@@ -30,10 +29,6 @@ export default class Routes extends React.Component {
   }
 
   render() {
-    return (
-      <Wallet>
-        <Page>{this.renderRoutes()}</Page>
-      </Wallet>
-    )
+    return <Page>{this.renderRoutes()}</Page>
   }
 }

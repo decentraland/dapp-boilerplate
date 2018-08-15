@@ -9,19 +9,19 @@ describe('Domain', function() {
       const now = new Date()
 
       await Promise.all([
-        Domain.insert({
+        Domain.create({
           id: 1,
           param: paramName,
           created_at: now,
           updated_at: now
         }),
-        Domain.insert({
+        Domain.create({
           id: 2,
           param: 'Disabled',
           created_at: now,
           updated_at: now
         }),
-        Domain.insert({
+        Domain.create({
           id: 3,
           param: 'Param 2',
           created_at: now,

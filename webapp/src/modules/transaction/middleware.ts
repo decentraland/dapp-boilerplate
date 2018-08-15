@@ -4,7 +4,7 @@ import {
   isTransactionAction,
   getTransactionHashFromAction
 } from 'modules/transaction/utils'
-import { getAddress } from 'modules/wallet/selectors'
+import { getAddress } from '@dapps/modules/wallet/selectors'
 
 export const createTransactionMiddleware = (): any => {
   const middleware: RootMiddleware = store => next => action => {

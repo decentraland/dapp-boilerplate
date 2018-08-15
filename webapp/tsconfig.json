@@ -26,6 +26,7 @@
       "types": ["./src/types"],
       "store": ["./src/store"],
       "locations": ["./src/locations"],
+      "contracts": ["./src/contracts"],
       "@dapps/*": ["./node_modules/decentraland-dapps/dist/*"]
     }
   },
