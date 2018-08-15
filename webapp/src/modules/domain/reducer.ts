@@ -9,7 +9,7 @@ import {
   FETCH_DOMAINS_SUCCESS
 } from 'modules/domain/types'
 import { toDomainObject } from 'modules/domain/utils'
-import { loadingReducer } from 'modules/loading/reducer'
+import { loadingReducer } from '@dapps/modules/loading/reducer'
 import { Reducer } from 'redux'
 
 const INITIAL_STATE: DomainState = {
