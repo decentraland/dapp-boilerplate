@@ -29,8 +29,11 @@ if (env.isDevelopment()) {
   })
 }
 
-new DomainRouter(app).mount()
-new TranslationRouter(app).mount()
+const router = express.Router()
+app.use('/v1', router)
+
+new DomainRouter(router).mount()
+new TranslationRouter(router).mount()
 
 /* Start the server only if run directly */
 if (require.main === module) {

@@ -12,14 +12,14 @@ export class DomainRouter extends Router {
      * Returns all domains
      * @return {array<Domain>}
      */
-    this.app.get('/api/domains', server.handleRequest(this.getDomains))
+    this.app.get('/domains', server.handleRequest(this.getDomains))
 
     /**
      * Returns the domains for a given param
      * @param  {string} param
      * @return {array<Domain>}
      */
-    this.app.get('/api/domains/:id', server.handleRequest(this.getDomain))
+    this.app.get('/domains/:id', server.handleRequest(this.getDomain))
   }
 
   async getDomains(): Promise<DomainAttributes[]> {

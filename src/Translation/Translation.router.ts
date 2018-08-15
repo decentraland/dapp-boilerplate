@@ -12,7 +12,7 @@ export class TranslationRouter extends Router {
      * @return {array<Translation>}
      */
     this.app.get(
-      '/api/translations/:locale',
+      '/translations/:locale',
       server.handleRequest(this.getTranslations)
     )
   }
