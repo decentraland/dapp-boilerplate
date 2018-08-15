@@ -4,13 +4,16 @@
     "es": "Español"
   },
   "global": {
+    "domain": "Dominio",
     "domains": "Dominios",
-    "domain": "Dominio"
+    "loading": "Cargando"
   },
   "domains_page": {
-    "title": "Página de dominios"
+    "title": "Página de dominios",
+    "empty_domains": "Sin dominios todavía"
   },
   "domain_detail_page": {
-    "title": "Página de detalles del dominio"
+    "title": "Página de detalles del dominio",
+    "no_domain": "El dominio no existe"
   }
 }

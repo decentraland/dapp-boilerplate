@@ -13,20 +13,34 @@ export default class DomainDetailPage extends React.PureComponent<
     this.props.onFetchDomains()
   }
 
+  areDomainsEmpty() {
+    const { domains } = this.props
+    return !domains || Object.keys(domains).length <= 0
+  }
+
+  renderDomains() {
+    const { domains } = this.props
+    if (!domains) return null
+
+    return Object.values(domains).map(domain => (
+      <div key={domain.id}>
+        {t('global.domain')}: "{domain.param}"
+      </div>
+    ))
+  }
+
   render() {
-    const { domains, isLoading } = this.props
+    const { isLoading } = this.props
 
     return (
       <div className="DomainDetailPage">
         <h1>{t('domains_page.title')}</h1>
 
-        {isLoading || !domains
-          ? 'Loading'
-          : Object.values(domains).map(domain => (
-              <div key={domain.id}>
-                {t('global.domain')}: "{domain.param}"
-              </div>
-            ))}
+        {isLoading
+          ? t('global.loading')
+          : this.areDomainsEmpty()
+            ? t('domains_page.empty_domains')
+            : this.renderDomains()}
       </div>
     )
   }

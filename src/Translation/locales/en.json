@@ -5,12 +5,15 @@
   },
   "global": {
     "domains": "Domains",
-    "domain": "Domain"
+    "domain": "Domain",
+    "loading": "Loading"
   },
   "domains_page": {
-    "title": "Domains Page"
+    "title": "Domains Page",
+    "empty_domains": "No domains yet"
   },
   "domain_detail_page": {
-    "title": "Domain Detail Page"
+    "title": "Domain Detail Page",
+    "no_domain": "Domain does not exist"
   }
 }

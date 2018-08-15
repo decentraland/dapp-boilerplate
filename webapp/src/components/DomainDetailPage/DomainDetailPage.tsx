@@ -21,11 +21,12 @@ export default class DomainDetailPage extends React.PureComponent<
       <div className="DomainDetailPage">
         <h1>{t('domain_detail_page.title')}</h1>
 
-        {isLoading || !domain ? (
-          'Loading'
+        {isLoading ? (
+          t('global.loading')
         ) : (
           <React.Fragment>
-            {t('global.domain')}: {domain.param}
+            {t('global.domain')}:{' '}
+            {domain ? domain.param : t('domain_detail_page.no_domain')}
           </React.Fragment>
         )}
       </div>
