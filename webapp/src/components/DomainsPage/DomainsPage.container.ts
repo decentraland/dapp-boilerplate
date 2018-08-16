@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { RootState } from 'types'
-import { DomainActions } from 'modules/domain/types'
+import { DomainReducerAction } from 'modules/domain/reducer'
 import { fetchDomainsRequest } from 'modules/domain/actions'
 import { getData, isLoading } from 'modules/domain/selectors'
 import { DomainsPageProps } from 'components/DomainsPage/types'
@@ -19,7 +19,7 @@ const mapState = (
   }
 }
 
-const mapDispatch = (dispatch: Dispatch<DomainActions>) => ({
+const mapDispatch = (dispatch: Dispatch<DomainReducerAction>) => ({
   onFetchDomains: () => dispatch(fetchDomainsRequest())
 })
 

@@ -2,10 +2,16 @@ import { AnyAction } from 'redux'
 import { Store, Dispatch } from 'react-redux'
 import { RouterState, RouterAction } from 'react-router-redux'
 
-import { DomainState, DomainActions } from 'modules/domain/types'
-import { TransactionState, TransactionActions } from 'modules/transaction/types'
-import { TranslationState, TranslationActions } from 'modules/translation/types'
-import { WalletState, WalletActions } from 'modules/wallet/types'
+import { DomainState, DomainReducerAction } from 'modules/domain/reducer'
+import {
+  TransactionState,
+  TransactionReducerAction
+} from '@dapps/modules/transaction/reducer'
+import {
+  TranslationState,
+  TranslationReducerAction
+} from '@dapps/modules/translation/reducer'
+import { WalletState, WalletReducerAction } from '@dapps/modules/wallet/reducer'
 
 export type RootState = {
   router: RouterState
@@ -17,10 +23,10 @@ export type RootState = {
 
 export type RootAction =
   | RouterAction
-  | DomainActions
-  | TransactionActions
-  | TranslationActions
-  | WalletActions
+  | DomainReducerAction
+  | TransactionReducerAction
+  | TranslationReducerAction
+  | WalletReducerAction
 
 export type RootStore = Store<RootState>
 

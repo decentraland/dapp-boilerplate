@@ -1,4 +1,4 @@
-import { DomainState } from 'modules/domain/types'
+import { DomainState } from 'modules/domain/reducer'
 
 export interface DomainsPageProps {
   domains: DomainState['data'] | null

@@ -1,5 +1,5 @@
 import { RootState } from 'types'
-import { DomainState } from 'modules/domain/types'
+import { DomainState } from 'modules/domain/reducer'
 
 export const getState: (state: RootState) => DomainState = state => state.domain
 

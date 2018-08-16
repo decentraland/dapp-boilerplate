@@ -1,16 +1,14 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
 import {
+  FETCH_DOMAINS_REQUEST,
+  FETCH_DOMAIN_REQUEST,
   fetchDomainsSuccess,
   fetchDomainsFailure,
   fetchDomainFailure,
-  fetchDomainSuccess
+  fetchDomainSuccess,
+  FetchDomainsRequestAction,
+  FetchDomainRequestAction
 } from 'modules/domain/actions'
-import {
-  FETCH_DOMAINS_REQUEST,
-  FETCH_DOMAIN_REQUEST,
-  FetchDomainsRequest,
-  FetchDomainRequest
-} from 'modules/domain/types'
 import { api } from 'lib/api'
 
 export function* domainSaga() {
@@ -18,7 +16,7 @@ export function* domainSaga() {
   yield takeLatest(FETCH_DOMAIN_REQUEST, handleDomainRequest)
 }
 
-function* handleDomainsRequest(action: FetchDomainsRequest) {
+function* handleDomainsRequest(action: FetchDomainsRequestAction) {
   try {
     const domains = yield call(() => api.fetchDomains())
     yield put(fetchDomainsSuccess(domains))
@@ -27,7 +25,7 @@ function* handleDomainsRequest(action: FetchDomainsRequest) {
   }
 }
 
-function* handleDomainRequest(action: FetchDomainRequest) {
+function* handleDomainRequest(action: FetchDomainRequestAction) {
   const id = action.payload.id
   try {
     const domain = yield call(() => api.fetchDomain(id))

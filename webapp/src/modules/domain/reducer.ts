@@ -1,16 +1,28 @@
+import { Reducer } from 'redux'
+import { Domain } from 'modules/domain/types'
 import {
   FETCH_DOMAIN_FAILURE,
   FETCH_DOMAIN_REQUEST,
   FETCH_DOMAIN_SUCCESS,
-  DomainActions,
-  DomainState,
   FETCH_DOMAINS_REQUEST,
   FETCH_DOMAINS_FAILURE,
-  FETCH_DOMAINS_SUCCESS
-} from 'modules/domain/types'
+  FETCH_DOMAINS_SUCCESS,
+  FetchDomainsRequestAction,
+  FetchDomainsSuccessAction,
+  FetchDomainsFailureAction,
+  FetchDomainRequestAction,
+  FetchDomainSuccessAction,
+  FetchDomainFailureAction
+} from 'modules/domain/actions'
 import { toDomainObject } from 'modules/domain/utils'
-import { loadingReducer } from '@dapps/modules/loading/reducer'
-import { Reducer } from 'redux'
+import { loadingReducer, LoadingState } from '@dapps/modules/loading/reducer'
+import { ModelById } from '@dapps/lib/types'
+
+export type DomainState = {
+  data: ModelById<Domain>
+  loading: LoadingState
+  error: string | null
+}
 
 const INITIAL_STATE: DomainState = {
   data: {},
@@ -18,9 +30,17 @@ const INITIAL_STATE: DomainState = {
   error: null
 }
 
+export type DomainReducerAction =
+  | FetchDomainsRequestAction
+  | FetchDomainsSuccessAction
+  | FetchDomainsFailureAction
+  | FetchDomainRequestAction
+  | FetchDomainSuccessAction
+  | FetchDomainFailureAction
+
 export const domainReducer: Reducer<DomainState> = (
   state = INITIAL_STATE,
-  action: DomainActions
+  action: DomainReducerAction
 ): DomainState => {
   switch (action.type) {
     case FETCH_DOMAINS_REQUEST:
