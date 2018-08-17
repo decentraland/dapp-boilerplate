@@ -1,10 +1,8 @@
 import * as React from 'react'
-import { DomainsPageProps } from 'components/DomainsPage/types'
 import { t } from '@dapps/modules/translation/utils'
+import { Props } from 'components/DomainsPage/DomainsPage.types'
 
-export default class DomainDetailPage extends React.PureComponent<
-  DomainsPageProps
-> {
+export default class DomainDetailPage extends React.PureComponent<Props> {
   static defaultProps = {
     domains: null
   }

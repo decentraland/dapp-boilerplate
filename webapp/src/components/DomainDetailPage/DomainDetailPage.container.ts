@@ -1,31 +1,30 @@
-import { Dispatch } from 'redux'
+import { Dispatch, AnyAction } from 'redux'
 import { connect } from 'react-redux'
 import { RootState } from 'types'
-import { DomainReducerAction } from 'modules/domain/reducer'
 import { fetchDomainRequest } from 'modules/domain/actions'
 import { getData, isLoading } from 'modules/domain/selectors'
-import { DomainDetailPageProps } from 'components/DomainDetailPage/types'
+import {
+  OwnProps,
+  MapStateProps,
+  MapDispatchProps
+} from 'components/DomainDetailPage/DomainDetailPage.types'
 
 import DomainDetailPage from './DomainDetailPage'
 
-const mapState = (
-  state: RootState,
-  ownProps: DomainDetailPageProps
-): DomainDetailPageProps => {
+const mapState = (state: RootState, ownProps: OwnProps): MapStateProps => {
+  const match = ownProps.match
   const domains = getData(state)
-  const domainId = ownProps.match.params.id
+  const domainId = match.params.id
 
   return {
-    ...ownProps,
     domain: domains[domainId],
-    isLoading: isLoading(state)
+    isLoading: isLoading(state),
+    match
   }
 }
 
-const mapDispatch = (dispatch: Dispatch<DomainReducerAction>) => ({
+const mapDispatch = (dispatch: Dispatch<AnyAction>): MapDispatchProps => ({
   onFetchDomain: (id: string) => dispatch(fetchDomainRequest(id))
 })
 
-export default connect<DomainDetailPageProps>(mapState, mapDispatch)(
-  DomainDetailPage
-)
+export default connect(mapState, mapDispatch)(DomainDetailPage)
