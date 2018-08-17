@@ -1,5 +1,5 @@
-import { Dispatch, AnyAction } from 'redux'
 import { connect } from 'react-redux'
+import { RootDispatch } from '@dapps/types'
 import { RootState } from 'types'
 import { fetchDomainsRequest } from 'modules/domain/actions'
 import { getData, isLoading } from 'modules/domain/selectors'
@@ -17,7 +17,7 @@ const mapState = (state: RootState): MapStateProps => {
   }
 }
 
-const mapDispatch = (dispatch: Dispatch<AnyAction>): MapDispatchProps => ({
+const mapDispatch = (dispatch: RootDispatch): MapDispatchProps => ({
   onFetchDomains: () => dispatch(fetchDomainsRequest())
 })
 

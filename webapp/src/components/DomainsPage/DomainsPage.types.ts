@@ -8,6 +8,5 @@ export type Props = {
   onFetchDomains: typeof fetchDomainsRequest
 }
 
-// Container
 export type MapStateProps = Omit<Props, 'onFetchDomains'>
 export type MapDispatchProps = Pick<Props, 'onFetchDomains'>
