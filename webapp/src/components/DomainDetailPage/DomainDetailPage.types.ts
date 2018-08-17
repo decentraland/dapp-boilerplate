@@ -15,5 +15,4 @@ export type Props = {
 }
 
 export type MapStateProps = Omit<Props, 'onFetchDomain'>
-export type OwnProps = Pick<Props, 'match'>
 export type MapDispatchProps = Pick<Props, 'onFetchDomain'>

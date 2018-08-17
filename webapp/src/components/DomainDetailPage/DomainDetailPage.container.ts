@@ -4,14 +4,14 @@ import { RootState } from 'types'
 import { fetchDomainRequest } from 'modules/domain/actions'
 import { getData, isLoading } from 'modules/domain/selectors'
 import {
-  OwnProps,
+  Props,
   MapStateProps,
   MapDispatchProps
 } from 'components/DomainDetailPage/DomainDetailPage.types'
 
 import DomainDetailPage from './DomainDetailPage'
 
-const mapState = (state: RootState, ownProps: OwnProps): MapStateProps => {
+const mapState = (state: RootState, ownProps: Props): MapStateProps => {
   const match = ownProps.match
   const domains = getData(state)
   const domainId = match.params.id
