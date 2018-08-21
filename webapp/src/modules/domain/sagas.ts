@@ -6,7 +6,6 @@ import {
   fetchDomainsFailure,
   fetchDomainFailure,
   fetchDomainSuccess,
-  FetchDomainsRequestAction,
   FetchDomainRequestAction
 } from 'modules/domain/actions'
 import { api } from 'lib/api'
@@ -16,7 +15,7 @@ export function* domainSaga() {
   yield takeLatest(FETCH_DOMAIN_REQUEST, handleDomainRequest)
 }
 
-function* handleDomainsRequest(action: FetchDomainsRequestAction) {
+function* handleDomainsRequest() {
   try {
     const domains = yield call(() => api.fetchDomains())
     yield put(fetchDomainsSuccess(domains))
